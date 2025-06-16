@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -11,22 +12,22 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		log.Fatalf("Usage: go run main.go <prompt>")
+	}
+
+	prompt := os.Args[1]
 	ollamaUrl := "http://localhost:11434"
 	model := "llama3.2:latest"
 
-	url, err := url.Parse(ollamaUrl)
+	parsedUrl, err := url.Parse(ollamaUrl)
 	if err != nil {
-		fmt.Errorf("failed to parse URL: %v", err)
+		log.Fatalf("failed to parse URL: %v", err)
 	}
 
-	apiClient := api.NewClient(url, http.DefaultClient)
+	apiClient := api.NewClient(parsedUrl, http.DefaultClient)
 
-	context := context.Background()
-	if len(os.Args) < 2 {
-		fmt.Println("Usage: go run main.go <prompt>")
-		return
-	}
-	prompt := os.Args[1]
+	ctx := context.Background()
 	request := &api.GenerateRequest{
 		Model:  model,
 		Prompt: prompt,
@@ -36,7 +37,8 @@ func main() {
 		return nil
 	}
 
-	if err := apiClient.Generate(context, request, responseFunc); err != nil {
-		fmt.Errorf("failed to generate response: %v", err)
+	if err := apiClient.Generate(ctx, request, responseFunc); err != nil {
+		log.Fatalf("failed to generate response: %v", err)
 	}
+
 }
