@@ -1,25 +1,17 @@
 # try-rag-app
-An simple RAG application
+A simple Retrieval-Augmented Generation (RAG) application  
+Basic RAG knowledge: [RAG](https://www.geeksforgeeks.org/nlp/what-is-retrieval-augmented-generation-rag/)
 
-## Install Ollama
+## Install and Run Ollama
 ```bash
 brew install ollama
-```
-
-### Serve Ollama
-```bash
 brew services start ollama
-```
-
-### Try to run model
-```bash
 ollama run llama3.2:latest
 ```
-Prompt it something and use `/exit` to exit
+Prompt it something and use `/exit` to exit.
 
-
-### Try to server endpoint
-Generate mode
+## Try Ollama API
+Generate mode:
 ```bash
 curl http://localhost:11434/api/generate -d '{
   "model": "llama3.2",
@@ -27,7 +19,7 @@ curl http://localhost:11434/api/generate -d '{
   "prompt":"What is NMIXX in K-pop?"
 }'
 ```
-Chat mode
+Chat mode:
 ```bash
 curl http://localhost:11434/api/chat -d '{
   "model": "llama3.2",
@@ -37,14 +29,12 @@ curl http://localhost:11434/api/chat -d '{
   ]
 }'
 ```
-** Stream = false means return response in a single message
+*Note: `stream = false` returns the response in a single message.*
 
-## Ran simple RAG application
-```Bash
+## Run the RAG application
+```bash
 go run main.go <prompt>
 ```
 
-
 ## Thanks
-
 Special thanks to [KProfiles](https://kprofiles.com/k-pop-girl-groups/) for K-pop group data used in this project.
