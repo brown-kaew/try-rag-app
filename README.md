@@ -43,3 +43,8 @@ curl http://localhost:11434/api/chat -d '{
 ```Bash
 go run main.go <prompt>
 ```
+
+
+## Thanks
+
+Special thanks to [KProfiles](https://kprofiles.com/k-pop-girl-groups/) for K-pop group data used in this project.
